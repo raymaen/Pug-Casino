@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import Ball from "./Ball";
+import Bid from "./Bid";
 
-export class BallList extends Component {
+export class BiddingList extends Component {
   render() {
     return (
-      <div className="ball-list d-flex justify-content-center ">
-        {this.props.balls.map(ball => (
-          <Ball ball={ball} key={ball.id} id={ball.id} />
+      <div className="bidding-list d-flex justify-content-center ">
+        {this.props.bids.map(bid => (
+          <Bid bid={bid} key={bid.id} id={bid.id} />
         ))}
       </div>
     );
@@ -16,7 +16,7 @@ export class BallList extends Component {
 }
 
 const mapStateToProps = state => ({
-  balls: state.game.balls
+  bids: state.game.balls
 });
 
 const mapDispatchToProps = {};
@@ -24,4 +24,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BallList);
+)(BiddingList);

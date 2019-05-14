@@ -7,6 +7,7 @@ import BiddingItem from "./BiddingItem";
 export class ToggleBet extends Component {
  
   handleClick = id => {
+    if(!this.props.gameIsRunning)
     this.props.updateBidAmount(id.split('-')[1])
   };
 
@@ -41,7 +42,8 @@ const mapStateToProps = state => ({
     "bidding-20",
     "bidding-10",
     "bidding-5"
-  ]
+  ] ,
+  gameIsRunning : state.game.gameIsRunning
 });
 
 const mapDispatchToProps = dispatch => ({

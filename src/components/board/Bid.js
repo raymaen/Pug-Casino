@@ -2,20 +2,28 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateBidData } from "../../actions/gameActions";
+import numberColorData from "../../assets/consts/numberColorData";
 
-export class Ball extends Component {
+export class Bid extends Component {
   handleClick = type => {
     let amount = this.props.bidAmount;
     if (type !== "add") amount *= -1;
-    this.props.updateBidData(this.props.id, Number(amount));
+    if (!this.props.gameIsRunning)
+      this.props.updateBidData(this.props.id, Number(amount));
   };
 
   render() {
-    const imgUrl = require(`../../assets/img/${this.props.ball.img}.png`);
     return (
-      <div className="ball">
+      <div className="bid">
         <div>
-          <img src={imgUrl} style={{ width: "60px" }} alt="" />
+          <h4
+            style={{
+              color: numberColorData[this.props.bid.id],
+              textShadow: `0 0 5px ${numberColorData[this.props.bid.id]}`
+            }}
+          >
+            {this.props.bid.id} x
+          </h4>
         </div>
         <i
           className="fas fa-plus"
@@ -34,15 +42,16 @@ export class Ball extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     bidAmount: state.game.bidAmount,
-    amount: state.game.bidData[ownProps.id]
+    amount: state.game.bidData[ownProps.id],
+    gameIsRunning: state.game.gameIsRunning
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  updateBidData: (ballId, amount) => dispatch(updateBidData(ballId, amount))
+  updateBidData: (bidId, amount) => dispatch(updateBidData(bidId, amount))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Ball);
+)(Bid);

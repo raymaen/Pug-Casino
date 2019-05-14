@@ -8,12 +8,12 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Finance from "./finance/Finance";
 import Board from "./board/Board";
-import History from "./history/History";
+import Chart from "./charts/Chart";
 
 export default function App() {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <AppBody />
       <Footer />
     </div>
@@ -22,16 +22,20 @@ export default function App() {
 
 const AppBody = () => (
   <div className="container-fluid app-body">
-    <div className="row">
-      <div className="col-md-2 finance">
-        <Finance />
+    <div className="row pb-4">
+     
+    <div className="col-md-3 history">
+        <Chart />
       </div>
-      <div className="col-md-8 board text-center">
+      
+      <div className="col-md-6 board text-center">
         <Board />
       </div>
-      <div className="col-md-2 history">
-        <History />
+
+      <div className="col-md-3 finance">
+        <Finance />
       </div>
+     
     </div>
   </div>
 );

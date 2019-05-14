@@ -3,32 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>Wheel of Fortune Bingo</title>
-    
-<!--
-    
-MIT License
-
-Copyright (c) 2017 Jeremy Rue
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
--->
-    
     <style type="text/css">
 
 
@@ -36,15 +10,17 @@ SOFTWARE.
         font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         font-size:14px;
         pointer-events:none;
-        padding-top: .3em;
+        margin: .3em;
     }
 
-    #chart{
+   
+
+    #spinner{
         position:absolute;
-        width:500px;
-        height:500px;
-        top:0;
-        left:0;
+        width:780px;
+        height:780px;
+        top:0px;
+        left:15px;
     }
 
     </style>
@@ -52,73 +28,101 @@ SOFTWARE.
 </head>
 <body>
     
-    <div id="chart"></div>
+    <div id="spinner"></div>
     <div id="question"><h1></h1></div>
     
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
-        var padding = {top:20, right:40, bottom:0, left:0},
-            w = 500 - padding.left - padding.right,
-            h = 500 - padding.top  - padding.bottom,
+        var padding = {top:10, right:80, bottom:0, left:0},
+            w = 780 - padding.left - padding.right,
+            h = 780 - padding.top  - padding.bottom,
             r = Math.min(w, h)/2,
             rotation = 0,
             oldrotation = 0,
             picked = 100000,
-            oldpick = [],
-            color = d3.scale.category20();//category20c()
+            oldpick = []
+        //category20c()
             //randomNumbers = getRandomNumbers();
 
         //http://osric.com/bingo-card-generator/?title=HTML+and+CSS+BINGO!&words=padding%2Cfont-family%2Ccolor%2Cfont-weight%2Cfont-size%2Cbackground-color%2Cnesting%2Cbottom%2Csans-serif%2Cperiod%2Cpound+sign%2C%EF%B9%A4body%EF%B9%A5%2C%EF%B9%A4ul%EF%B9%A5%2C%EF%B9%A4h1%EF%B9%A5%2Cmargin%2C%3C++%3E%2C{+}%2C%EF%B9%A4p%EF%B9%A5%2C%EF%B9%A4!DOCTYPE+html%EF%B9%A5%2C%EF%B9%A4head%EF%B9%A5%2Ccolon%2C%EF%B9%A4style%EF%B9%A5%2C.html%2CHTML%2CCSS%2CJavaScript%2Cborder&freespace=true&freespaceValue=Web+Design+Master&freespaceRandom=false&width=5&height=5&number=35#results
                         
         var data = [
-                    {"id" : "1" , "label":"1",  "value":1,  "color": '#666'}, // padding
-                    {"id" : "2" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "3" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "4" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "5" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "6" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "7" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "8" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "9" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "10" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "11" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "12" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "13" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "14" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "15" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "16" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "17" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "18" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "19" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "20" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "21" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "22" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "23" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "24" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "25" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "26" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "27" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "28" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "29" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "30" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "24" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "25" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "26" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "27" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "28" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "29" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "30" ,"label":"1",  "value":1,  "color": '#666'},
-                             {"id" : "24" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "25" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "26" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "27" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "28" ,"label":"3",  "value":3,  "color": 'rgb(28, 139, 33)'},
-                    {"id" : "29" ,"label":"1",  "value":1,  "color": '#666'},
-                    {"id" : "30" ,"label":"1",  "value":1,  "color": '#666'}
+
+      
+                    /* 54 : X */
+
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "10" , "label":"10",  "value":10,  "color": '#E5336C'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+
+                    {"id" : "5" , "label":"5",  "value":5,  "color": '#00A690'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "21" , "label":"21",  "value":21,  "color": '#B90380'},
+
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+                    {"id" : "5" , "label":"5",  "value":5,  "color": '#00A690'},
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "10" , "label":"10",  "value":10,  "color": '#E5336C'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "5" , "label":"5",  "value":5,  "color": '#00A690'},
+
+                    
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "45" , "label":"45",  "value":45,  "color": '#54424B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+                    {"id" : "5" , "label":"5",  "value":5,  "color": '#00A690'},
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'}, 
+
+                    {"id" : "10" , "label":"10",  "value":10,  "color": '#E5336C'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+                    {"id" : "5" , "label":"5",  "value":5,  "color": '#00A690'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+                    {"id" : "21" , "label":"21",  "value":21,  "color": '#B90380'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+
+                    {"id" : "5" , "label":"5",  "value":5,  "color": '#00A690'},
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+                    {"id" : "10" , "label":"10",  "value":10,  "color": '#E5336C'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "5" , "label":"5",  "value":5,  "color": '#00A690'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "1" , "label":"1",  "value":1,  "color": '#FFC950'},
+                        
+                    {"id" : "45" , "label":"45",  "value":45,  "color": '#54424B'},
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'},
+                    {"id" : "5" , "label":"5",  "value":5,  "color": '#00A690'},
+                    {"id" : "3" , "label":"3",  "value":3,  "color": '#FF974B'}
+
         ];
 
+        //data = data.map((a) => [Math.random(),a]).sort((a,b) => a[0]-b[0]).map((a) => a[1]);
 
-        var svg = d3.select('#chart')
+
+        var svg = d3.select('#spinner')
             .append("svg")
             .data([data])
             .attr("width",  w + padding.left + padding.right)
@@ -153,7 +157,7 @@ SOFTWARE.
                 d.innerRadius = 0;
                 d.outerRadius = r;
                 d.angle = (d.startAngle + d.endAngle)/2;
-                return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")translate(" + (d.outerRadius -10) +")";
+                return "rotate(" + (d.angle * 180 / Math.PI - 89.4) + ")translate(" + (d.outerRadius -10) +")";
             })
             .attr("text-anchor", "end").attr("class" , "number-text").style('fill', '#fff')
             .text( function(d, i) {
