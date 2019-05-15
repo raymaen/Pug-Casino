@@ -19,9 +19,8 @@ const mapStateToProps = state => ({
   balance: state.game.balance
 });
 
-const mapDispatchToProps = {};
+
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Finance);

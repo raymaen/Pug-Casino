@@ -28,9 +28,8 @@ const mapStateToProps = state => ({
   history: state.game.history
 });
 
-const mapDispatchToProps = {};
+
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Chart);

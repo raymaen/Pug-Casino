@@ -19,9 +19,8 @@ const mapStateToProps = state => ({
   bids: state.game.balls
 });
 
-const mapDispatchToProps = {};
+
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(BiddingList);
