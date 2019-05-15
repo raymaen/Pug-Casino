@@ -33,12 +33,12 @@ export default function Footer() {
             <br />
             <br />
           </p>
-          <button
+          <a
             className="btn btn-outline-light btn-lg"
-            style={{ letterSpacing: "1.5px" }}
+            style={{ letterSpacing: "1.5px" }} href="https://github.com/raymaen/Pug-Casino"  target="_blank"
           >
             View Project On Github <i class="fab fa-github ml-3" />
-          </button>
+          </a>
         </div>
         <div className="col-md-5 ml-5">
           <img src={imgUrl} width="400px" alt="" />
