@@ -12,8 +12,8 @@ export default function Footer() {
           <p
             style={{
               borderLeft: "1px solid #fff",
-              padding: "0 0 0 15px",
-              margin: "30px 0"
+              padding: "0 0 0 25px",
+              margin: "30px 0 40px 20px"
             }}
           >
             Charles Fey was credited with the invention of the first slot

@@ -2,6 +2,7 @@ html,
 body {
   height: 100%;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  overflow-x: hidden;
 }
 
 .app-body {
@@ -12,6 +13,10 @@ body {
 
 .app-body .row {
   min-height: 65vh;
+}
+
+.history {
+  padding-left: 30px;
 }
 
 .footer {
@@ -129,12 +134,12 @@ body {
 
 .bid {
   margin: 0 1em;
-  margin: 0 25px;
+  margin: 0 20px;
 }
 
 .bid h4 {
   color: #fff;
-  font-size: 2.7em;
+  font-size: 3vw;
 }
 
 .bid h6 {
@@ -167,8 +172,10 @@ body {
 }
 
 #spinner {
-  -webkit-transition: all 14000ms cubic-bezier(0.57, 0.585, 0.065, 1);
-  transition: all 14000ms cubic-bezier(0.57, 0.585, 0.065, 1);
+  -webkit-transition: -webkit-transform 14000ms cubic-bezier(0.57, 0.585, 0.065, 1);
+  transition: -webkit-transform 14000ms cubic-bezier(0.57, 0.585, 0.065, 1);
+  transition: transform 14000ms cubic-bezier(0.57, 0.585, 0.065, 1);
+  transition: transform 14000ms cubic-bezier(0.57, 0.585, 0.065, 1), -webkit-transform 14000ms cubic-bezier(0.57, 0.585, 0.065, 1);
   user-drag: none;
   user-select: none;
   -moz-user-select: none;
@@ -177,7 +184,7 @@ body {
   -ms-user-select: none;
   z-index: 1;
   position: relative;
-  width: 550px;
+  width: 35vw;
   margin: 25px 0 0 0;
 }
 
@@ -343,7 +350,7 @@ body {
 }
 
 .pug-container img {
-  width: 180px;
+  max-width: 180px;
   height: 120px;
   margin: 0 20px 0 20px;
 }
